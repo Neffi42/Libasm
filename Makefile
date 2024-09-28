@@ -8,7 +8,7 @@ BONUS_OBJ   = $(patsubst %.s, $(OBJ_DIR)/%.o, $(BONUS_SRC))
 TEST_SRC    = $(addprefix test/, main.c)
 TEST_PRGM 	= test_program
 CC          = cc
-CFLAGS      = -Wall -Werror -Wextra
+CFLAGS      = -Wall -Werror -Wextra -g3 -z noexecstack
 NASM        = nasm
 NASM_FLAGS  = -f elf64
 
@@ -35,6 +35,6 @@ bonus: fclean $(BONUS_OBJ)
 	ar rcs $(NAME) $(BONUS_OBJ)
 
 test: $(NAME)
-	$(CC) $(TEST_SRC) -L. -lasm -o $(TEST_PRGM)
+	$(CC) $(CFLAGS) $(TEST_SRC) -L. -lasm -o $(TEST_PRGM)
 
 .PHONY: all clean fclean re test
