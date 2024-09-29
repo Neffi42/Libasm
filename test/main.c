@@ -4,6 +4,7 @@
 
 unsigned long ft_strlen(const char* s);
 int ft_strcmp(const char *s1, const char *s2);
+char *ft_strcpy(char *restrict dst, const char *restrict src);
 
 int main() {
 	{
@@ -32,6 +33,17 @@ int main() {
 
 		char* s7 = NULL;
 		printf("\tTest strings: '%s' '%s'\n\tstrcmp: %d\n\tft_strcmp: %d\n", s7, s7, strcmp(s7, s7), ft_strcmp(s7, s7));
+	}
+	{
+		printf("ft_strcpy:\n");
+
+		char* s1 = "123456789";
+		char s2[10] = {0};
+		printf("\tTest strings: '%s' '%s'\n\tstrcpy: %s\n\tft_strcpy: %s\n", s1, s2, strcpy(s2, s1), ft_strcpy(s2, s1));
+
+		char* s3 = NULL;
+		char* s4 = NULL;
+		printf("\tTest strings: '%s' '%s'\n\tstrcpy: %s\n\tft_strcpy: %s\n", s3, s4, "segmentation fault", ft_strcpy(s3, s4));
 	}
 	return 0;
 }

@@ -1,7 +1,7 @@
 NAME        = libasm.a
 SRC_DIR     = src
 OBJ_DIR     = obj
-SRC         = ft_strlen.s ft_strcmp.s
+SRC         = ft_strlen.s ft_strcmp.s ft_strcpy.s
 OBJ         = $(patsubst %.s, $(OBJ_DIR)/%.o, $(SRC))
 BONUS_SRC   = $(SRC) $(addprefix bonus/, )
 BONUS_OBJ   = $(patsubst %.s, $(OBJ_DIR)/%.o, $(BONUS_SRC))
