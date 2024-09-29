@@ -3,81 +3,146 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include <fcntl.h>
 
 unsigned long ft_strlen(const char* s);
 int ft_strcmp(const char* s1, const char* s2);
 char *ft_strcpy(char* restrict dst, const char* restrict src);
 ssize_t ft_write(int fd, const void* buf, size_t count);
+ssize_t ft_read(int fd, void* buf, size_t count);
+
+void print_section_separator(const char* section_name) {
+    printf("\n==== %s ====\n", section_name);
+}
+
+void test_ft_strlen() {
+    print_section_separator("ft_strlen");
+
+    char* s1 = "This is a test";
+    printf("Test string: '%s'\n", s1);
+    printf("Expected strlen: %lu\n", strlen(s1));
+    printf("ft_strlen: %lu\n", ft_strlen(s1));
+
+    char* s2 = NULL;
+    printf("\nTest string: NULL\n");
+    printf("Expected behavior: segmentation fault\n");
+    printf("ft_strlen: %lu (avoid crash due to null pointer)\n", ft_strlen(s2));
+}
+
+void test_ft_strcmp() {
+    print_section_separator("ft_strcmp");
+
+    char* s1 = "This is a test";
+    char* s2 = "This is a test";
+    printf("Test strings: '%s' and '%s'\n", s1, s2);
+    printf("Expected strcmp: %d\n", strcmp(s1, s2));
+    printf("ft_strcmp: %d\n", ft_strcmp(s1, s2));
+
+    char* s3 = "This is a test";
+    char* s4 = "This is not a test";
+    printf("\nTest strings: '%s' and '%s'\n", s3, s4);
+    printf("Expected strcmp: %d\n", strcmp(s3, s4));
+    printf("ft_strcmp: %d\n", ft_strcmp(s3, s4));
+
+    char* s5 = NULL;
+    printf("\nTest strings: NULL and NULL\n");
+    printf("Expected behavior: segmentation fault\n");
+    printf("ft_strcmp: %d (avoid crash due to null pointer)\n", ft_strcmp(s5, s5));
+}
+
+void test_ft_strcpy() {
+    print_section_separator("ft_strcpy");
+
+    char* s1 = "123456789";
+    char s2[10] = {0};
+    printf("Test strings: '%s' and destination buffer (empty)\n", s1);
+    printf("Expected strcpy: '%s'\n", strcpy(s2, s1));
+    printf("ft_strcpy: '%s'\n", ft_strcpy(s2, s1));
+
+    char* s3 = NULL;
+    char* s4 = NULL;
+    printf("\nTest strings: NULL and NULL\n");
+    printf("Expected behavior: segmentation fault\n");
+    printf("ft_strcpy: %s (avoid crash due to null pointer)\n", ft_strcpy(s3, s4));
+}
+
+void test_ft_write() {
+    print_section_separator("ft_write");
+
+    char* s1 = "This is a test";
+    printf("Test string: '%s'\n", s1);
+    ssize_t n1 = write(1, s1, ft_strlen(s1));
+    write(1, "\n", 1);
+    ssize_t n2 = ft_write(1, s1, ft_strlen(s1));
+    ft_write(1, "\n", 1);
+    printf("Expected write: %ld\n", n1);
+    printf("ft_write: %ld\n", n2);
+
+    printf("\nTesting invalid file descriptor (-1):\n");
+    char* s2 = "This is an error";
+    n1 = write(-1, s2, ft_strlen(s2));
+    if (n1 == -1) {
+        printf("write failed, errno: %d\n", errno);
+        perror("write error");
+    }
+    n2 = ft_write(-1, s2, ft_strlen(s2));
+    if (n2 == -1) {
+        printf("ft_write failed, errno: %d\n", errno);
+        perror("ft_write error");
+    }
+}
+
+void test_ft_read() {
+    print_section_separator("ft_read");
+
+    char buf[100];
+    printf("Reading from stdin (enter some text):\n");
+    ssize_t n1 = read(0, buf, 100);
+    buf[n1] = '\0';
+    printf("Data read by read: '%s' (bytes read: %ld)\n", buf, n1);
+
+    ssize_t n2 = ft_read(0, buf, 100);
+    buf[n2] = '\0';
+    printf("Data read by ft_read: '%s' (bytes read: %ld)\n", buf, n2);
+
+    char* file_name = "./Makefile";
+    int fd = open(file_name, O_RDONLY);
+    if (fd == -1) {
+        printf("Failed to open file '%s'\n", file_name);
+        perror("open error");
+    } else {
+        char file_buf[50];
+        ssize_t file_read = read(fd, file_buf, 50);
+        file_buf[file_read] = '\0';
+        printf("\nData read by read from '%s': '%s' (bytes read: %ld)\n", file_name, file_buf, file_read);
+
+        lseek(fd, 0, SEEK_SET);
+        ssize_t ft_file_read = ft_read(fd, file_buf, 50);
+        file_buf[ft_file_read] = '\0';
+        printf("Data read by ft_read from '%s': '%s' (bytes read: %ld)\n", file_name, file_buf, ft_file_read);
+
+        close(fd);
+    }
+
+    printf("\nTesting invalid file descriptor (-1):\n");
+    ssize_t n3 = read(-1, buf, 100);
+    if (n3 == -1) {
+        printf("read failed, errno: %d\n", errno);
+        perror("read error");
+    }
+    ssize_t n4 = ft_read(-1, buf, 100);
+    if (n4 == -1) {
+        printf("ft_read failed, errno: %d\n", errno);
+        perror("ft_read error");
+    }
+}
 
 int main() {
-	{
-		printf("ft_strlen:\n");
+    test_ft_strlen();
+    test_ft_strcmp();
+    test_ft_strcpy();
+    test_ft_write();
+    test_ft_read();
 
-		char* s1 = "This a test";
-		printf("\tTest string: '%s'\n\tstrlen: %ld\n\tft_strlen: %ld\n", s1, strlen(s1), ft_strlen(s1));
-
-		char* s2 = NULL;
-		printf("\tTest string: '%s'\n\tstrlen: %s\n\tft_strlen: %ld\n", s2, "segmentation fault", ft_strlen(s2));
-	}
-	{
-		printf("ft_strcmp:\n");
-
-		char* s1 = "This a test";
-		char* s2 = "This a test";
-		printf("\tTest strings: '%s' '%s'\n\tstrcmp: %d\n\tft_strcmp: %d\n", s1, s2, strcmp(s1, s2), ft_strcmp(s1, s2));
-
-		char* s3 = "This not a test";
-		char* s4 = "This a test";
-		printf("\tTest strings: '%s' '%s'\n\tstrcmp: %d\n\tft_strcmp: %d\n", s3, s4, strcmp(s3, s4), ft_strcmp(s3, s4));
-
-		char* s5 = "This a test";
-		char* s6 = "This not a test";
-		printf("\tTest strings: '%s' '%s'\n\tstrcmp: %d\n\tft_strcmp: %d\n", s5, s6, strcmp(s5, s6), ft_strcmp(s5, s6));
-
-		char* s7 = NULL;
-		printf("\tTest strings: '%s' '%s'\n\tstrcmp: %d\n\tft_strcmp: %d\n", s7, s7, strcmp(s7, s7), ft_strcmp(s7, s7));
-	}
-	{
-		printf("ft_strcpy:\n");
-
-		char* s1 = "123456789";
-		char s2[10] = {0};
-		printf("\tTest strings: '%s' '%s'\n\tstrcpy: %s\n\tft_strcpy: %s\n", s1, s2, strcpy(s2, s1), ft_strcpy(s2, s1));
-
-		char* s3 = NULL;
-		char* s4 = NULL;
-		printf("\tTest strings: '%s' '%s'\n\tstrcpy: %s\n\tft_strcpy: %s\n", s3, s4, "segmentation fault", ft_strcpy(s3, s4));
-	}
-	{
-		printf("ft_write:\n");
-
-		char* s1 = "This a test";
-		printf("\tTest string: '%s'\n", s1);
-		ssize_t n1 = write(1, s1, ft_strlen(s1));
-		write(1, "\n", 1);
-		ssize_t n2 = ft_write(1, s1, ft_strlen(s1));
-		ft_write(1, "\n", 1);
-		printf("\twrite: %ld\n\tft_write: %ld\n", n1, n2);
-
-		char* s2 = "This an error";
-		printf("\tTest string: '%s'\n", s2);
-		n1 = write(1, s2, ft_strlen(s2));
-		write(1, "\n", 1);
-		n2 = ft_write(1, s2, ft_strlen(s2));
-		ft_write(1, "\n", 1);
-		printf("\twrite: %ld\n\tft_write: %ld\n", n1, n2);
-
-		n1 = write(-1, s2, ft_strlen(s2));
-		if (n1 == -1) {
-      		printf("write failed, errno: %d\n", errno);
-        	perror("write error");
-    	}
-		n2 = ft_write(-1, s2, ft_strlen(s2));
-		printf("n2: %ld\n", n2);
-		if (n2 == -1) {
-			printf("ft_write failed, errno: %d\n", errno);
-			perror("ft_write error");
-		}
-	}
-	return 0;
+    return 0;
 }
