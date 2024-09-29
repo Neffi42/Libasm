@@ -3,14 +3,14 @@ section .text
 
 ft_strlen:
     xor rax, rax
-    cmp rdi, 0
-    je .done
+    test rdi, rdi
+    je .return_len
 
 .loop:
     cmp byte [rdi + rax],  0
-    je .done
+    je .return_len
     inc rax
     jmp .loop
 
-.done:
+.return_len:
     ret
