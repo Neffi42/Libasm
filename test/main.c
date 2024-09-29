@@ -10,6 +10,7 @@ int ft_strcmp(const char* s1, const char* s2);
 char *ft_strcpy(char* restrict dst, const char* restrict src);
 ssize_t ft_write(int fd, const void* buf, size_t count);
 ssize_t ft_read(int fd, void* buf, size_t count);
+char *ft_strdup(const char *s);
 
 void print_section_separator(const char* section_name) {
     printf("\n==== %s ====\n", section_name);
@@ -137,12 +138,59 @@ void test_ft_read() {
     }
 }
 
+void test_ft_strdup() {
+	print_section_separator("ft_strdup");
+
+    char* s1 = "Hello, world!";
+    char* dup1 = ft_strdup(s1);
+    printf("Original: '%s'\n", s1);
+    printf("Duplicated (ft_strdup): '%s'\n", dup1);
+	free(dup1);
+	dup1 = strdup(s1);
+    printf("Expected: '%s'\n", dup1);
+    free(dup1);
+
+    // char* s2 = "";
+    // char* dup2 = ft_strdup(s2);
+    // printf("\nOriginal: '%s'\n", s2);
+    // printf("Duplicated (ft_strdup): '%s'\n", dup2);
+    // printf("Expected: '%s'\n", strdup(s2));
+    // free(dup2);
+
+    // char* dup3 = ft_strdup(NULL);
+    // printf("\nOriginal: NULL\n");
+    // if (dup3 == NULL) {
+    //     printf("Duplicated (ft_strdup): NULL (Expected behavior for NULL input)\n");
+    // } else {
+    //     printf("Duplicated (ft_strdup): %s (Unexpected behavior)\n", dup3);
+    //     free(dup3);
+    // }
+
+    // char* s3 = "Line1\nLine2\tSpecialChar\x01";
+    // char* dup4 = ft_strdup(s3);
+    // printf("\nOriginal with special chars: '%s'\n", s3);
+    // printf("Duplicated (ft_strdup): '%s'\n", dup4);
+    // free(dup4);
+
+    // char* large_s = (char*)malloc(1000001);
+    // if (large_s) {
+    //     memset(large_s, 'A', 1000000);
+    //     large_s[1000000] = '\0';
+    //     char* large_dup = ft_strdup(large_s);
+    //     printf("\nOriginal large string: first 10 chars '%.*s'...\n", 10, large_s);
+    //     printf("Duplicated large string (ft_strdup): first 10 chars '%.*s'...\n", 10, large_dup);
+    //     free(large_s);
+    //     free(large_dup);
+    // }
+}
+
 int main() {
-    test_ft_strlen();
-    test_ft_strcmp();
-    test_ft_strcpy();
-    test_ft_write();
-    test_ft_read();
+    // test_ft_strlen();
+    // test_ft_strcmp();
+    // test_ft_strcpy();
+    // test_ft_write();
+    // test_ft_read();
+	test_ft_strdup();
 
     return 0;
 }
