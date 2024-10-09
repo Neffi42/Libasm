@@ -10,13 +10,13 @@ ft_strdup:
 	je .return_null
 
 	call ft_strlen
-	mov rsi, rdi
+	push rdi
 	inc rax
 	mov rdi, rax
 	call malloc wrt ..plt
 	cmp	rax, 0
 	jz	.on_error
-
+	pop	rsi
 	mov rdi, rax
 	call ft_strcpy
 	ret
@@ -26,9 +26,4 @@ ft_strdup:
 	ret
 
 .on_error:
-	neg		rax
-	mov		rdi, rax
-	call    __errno_location wrt ..plt
-	mov		[rax], rdi
-	mov		rax, -1
 	ret
