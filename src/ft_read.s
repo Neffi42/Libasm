@@ -5,8 +5,6 @@ section .text
 ft_read:
 	test rsi, rsi
 	je .return_null
-	test rdx, rdx
-	je .return_null
 
 	mov rax, 0
 	syscall
