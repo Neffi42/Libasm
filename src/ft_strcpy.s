@@ -1,6 +1,5 @@
 section .text
     global ft_strcpy
-	extern ft_strlen
 
 ft_strcpy:
 	xor rax, rax
@@ -11,12 +10,19 @@ ft_strcpy:
 	test rsi, rsi
 	je .return_null
 
-	call ft_strlen
-	mov rcx, rax
-	cld
-	rep movsb
-	mov rax, rdi
-	ret
+	jmp .loop
+
+.loop:
+	mov al, [rsi + rcx]
+	mov [rdi + rcx], al
+	cmp al, 0
+	je .return_cpy
+	inc rcx
+	jmp .loop
 
 .return_null:
+	ret
+
+.return_cpy:
+	mov rax, rdi
 	ret
