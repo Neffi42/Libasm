@@ -15,3 +15,5 @@ ft_list_size:
 
 .done:
 	ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits

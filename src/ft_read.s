@@ -25,3 +25,5 @@ ft_read:
 	mov		[rax], rdi
 	mov		rax, -1
 	ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits

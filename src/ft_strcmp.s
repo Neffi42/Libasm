@@ -34,3 +34,5 @@ ft_strcmp:
 
 .return_null:
     ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits

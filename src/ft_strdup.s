@@ -27,3 +27,5 @@ ft_strdup:
 
 .on_error:
 	ret
+
+section .note.GNU-stack noalloc noexec nowrite progbits
