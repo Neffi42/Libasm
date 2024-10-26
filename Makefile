@@ -3,7 +3,8 @@ SRC_DIR     = src
 OBJ_DIR     = obj
 SRC         = ft_strlen.s ft_strcmp.s ft_strcpy.s ft_write.s ft_read.s ft_strdup.s
 OBJ         = $(patsubst %.s, $(OBJ_DIR)/%.o, $(SRC))
-BONUS_SRC   = $(SRC) $(addprefix bonus/, $(addsuffix _bonus.s, ft_list_size))
+BONUS_SRC   = $(SRC) $(addprefix bonus/, $(addsuffix _bonus.s, ft_list_size \
+				ft_list_push_front))
 BONUS_OBJ   = $(patsubst %.s, $(OBJ_DIR)/%.o, $(BONUS_SRC))
 TEST_SRC    = $(addprefix test/, main.c)
 TEST_B_SRC	= $(addprefix test/, main_bonus.c)

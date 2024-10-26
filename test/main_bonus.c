@@ -267,24 +267,24 @@ int ft_cmp(void *s1, void *s2) { return (strcmp((void *)s1, (void *)s2)); }
 //   }
 // }
 
-// void test_ft_list_push_front(int *ret_value) {
-//   printf("\ntest ft_list_push_front:\n");
-//   const char *str[] = {"a", "b", "c", NULL};
+void test_ft_list_push_front(int *ret_value) {
+  printf("\ntest ft_list_push_front:\n");
+  const char *str[] = {"a", "b", "c", NULL};
 
-//   printf("ft_list_push_front(): ");
-//   t_list *list_1 = NULL;
-//   t_list *list_2 = NULL;
-//   for (int i = 0; str[i] != NULL; i++) {
-//     ft_list_push_front_ref(&list_1, (void *)strdup(str[i]));
-//     ft_list_push_front(&list_2, (void *)strdup(str[i]));
-//   }
-//   ft_list_print_ref(list_1);
-//   printf(" == ");
-//   ft_list_print_ref(list_2);
-//   print_result(ft_list_diff_ref(list_1, list_2) == 0, ret_value);
-//   ft_list_clear_ref(list_1, free);
-//   ft_list_clear_ref(list_2, free);
-// }
+  printf("ft_list_push_front(): ");
+  t_list *list_1 = NULL;
+  t_list *list_2 = NULL;
+  for (int i = 0; str[i] != NULL; i++) {
+    ft_list_push_front_ref(&list_1, (void *)strdup(str[i]));
+    ft_list_push_front(&list_2, (void *)strdup(str[i]));
+  }
+  ft_list_print_ref(list_1);
+  printf(" == ");
+  ft_list_print_ref(list_2);
+  print_result(ft_list_diff_ref(list_1, list_2) == 0, ret_value);
+  ft_list_clear_ref(list_1, free);
+  ft_list_clear_ref(list_2, free);
+}
 
 void test_ft_list_size(int *ret_value) {
   printf("\ntest ft_list_size:\n");
@@ -368,7 +368,7 @@ int main(void) {
   int ret_value = 0;
 
 //   test_ft_atoi_base(&ret_value);
-//   test_ft_list_push_front(&ret_value);
+  test_ft_list_push_front(&ret_value);
   test_ft_list_size(&ret_value);
 //   test_ft_list_sort(&ret_value);
 //   test_ft_list_remove_if(&ret_value);
