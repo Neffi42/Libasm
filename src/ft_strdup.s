@@ -26,6 +26,9 @@ ft_strdup:
 	ret
 
 .on_error:
+	call __errno_location wrt ..plt
+	mov dword [rax], 12
+	xor rax, rax
 	ret
 
 section .note.GNU-stack noalloc noexec nowrite progbits

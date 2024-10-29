@@ -216,57 +216,6 @@ void ft_list_clear_ref(t_list *begin_list, void (*free_fct)(void *)) {
 
 int ft_cmp(void *s1, void *s2) { return (strcmp((void *)s1, (void *)s2)); }
 
-// void test_ft_atoi_base(int *ret_value) {
-//   printf("\ntest ft_atoi_base:\n");
-//   char *str[] = {"",
-//                  "\?",
-//                  "01",
-//                  "2",
-//                  "afffffffa",
-//                  "-",
-//                  "-0",
-//                  "-1",
-//                  "   ---+--+1234ab567",
-//                  "   ---+-+1234ab567",
-//                  "1234ab567",
-//                  "-2147483649",
-//                  "4294967295",
-//                  "-9223372036854775808",
-//                  "-18446744073709551615",
-//                  "43",
-//                  "+43",
-//                  "-43",
-//                  "--43",
-//                  "---43",
-//                  " -43",
-//                  " --43",
-//                  " ---43",
-//                  NULL};
-//   for (int i = 0; str[i] != NULL; i++) {
-//     char *base[] = {"",
-//                     "0",
-//                     "010",
-//                     "001",
-//                     "0\t1",
-//                     "01 ",
-//                     "+01",
-//                     "01",
-//                     "01234567",
-//                     "0123456789",
-//                     "0123456789abcdef",
-//                     NULL};
-
-//     for (int j = 0; base[j] != NULL; j++) {
-//       int ret_1 = ft_atoi_base_ref(str[i], base[j]);
-//       int ret_2 = ft_atoi_base(str[i], base[j]);
-
-//       printf("ft_atoi_base(\"%s\", \"%s\"): ", str[i], base[j]);
-//       printf("%d == %d.", ret_1, ret_2);
-//       print_result(ret_1 == ret_2, ret_value);
-//     }
-//   }
-// }
-
 void test_ft_list_push_front(int *ret_value) {
   printf("\ntest ft_list_push_front:\n");
   const char *str[] = {"a", "b", "c", NULL};
@@ -311,66 +260,10 @@ void test_ft_list_size(int *ret_value) {
   }
 }
 
-// void test_ft_list_sort(int *ret_value) {
-//   printf("\ntest ft_list_sort:\n");
-//   const char *str[] = {"a", "b", "c", "A", "a", "d", NULL};
-//   const int lens[] = {0, 1, 2, 3, 4, 5, 6};
-
-//   for (int j = 0; j < 7; j++) {
-//     printf("ft_list_sort(): ");
-//     t_list *list_1 = NULL;
-//     t_list *list_2 = NULL;
-
-//     for (int i = 0; str[i] != NULL && i < lens[j]; i++) {
-//       ft_list_push_front_ref(&list_1, (void *)strdup(str[i]));
-//       ft_list_push_front_ref(&list_2, (void *)strdup(str[i]));
-//     }
-//     ft_list_sort_ref(&list_1, ft_cmp);
-//     ft_list_print_ref(list_1);
-//     printf(" == ");
-//     ft_list_sort(&list_2, ft_cmp);
-//     ft_list_print_ref(list_2);
-//     print_result(ft_list_diff_ref(list_1, list_2) == 0, ret_value);
-//     ft_list_clear_ref(list_1, free);
-//     ft_list_clear_ref(list_2, free);
-//   }
-// }
-
-// void test_ft_list_remove_if(int *ret_value) {
-//   printf("\ntest ft_list_remove_if:\n");
-//   const char *str[] = {"a", "b", "c", NULL};
-//   const char *str_ref[] = {"a", "b", "c", NULL};
-//   const int lens[] = {0, 1, 2, 3};
-
-//   for (int k = 0; str_ref[k] != NULL; k++) {
-//     for (int j = 0; j < 4; j++) {
-//       printf("ft_list_remove_if(): ");
-//       t_list *list_1 = NULL;
-//       t_list *list_2 = NULL;
-
-//       for (int i = 0; str[i] != NULL && i < lens[j]; i++) {
-//         ft_list_push_front_ref(&list_1, (void *)strdup(str[i]));
-//         ft_list_push_front_ref(&list_2, (void *)strdup(str[i]));
-//       }
-//       ft_list_remove_if_ref(&list_1, (void *)str_ref[k], ft_cmp, free);
-//       ft_list_remove_if(&list_2, (void *)str_ref[k], ft_cmp, free);
-//       ft_list_print_ref(list_1);
-//       printf(" == ");
-//       ft_list_print_ref(list_2);
-//       print_result(ft_list_diff_ref(list_1, list_2) == 0, ret_value);
-//       ft_list_clear_ref(list_1, free);
-//       ft_list_clear_ref(list_2, free);
-//     }
-//   }
-// }
-
 int main(void) {
   int ret_value = 0;
 
-//   test_ft_atoi_base(&ret_value);
   test_ft_list_push_front(&ret_value);
   test_ft_list_size(&ret_value);
-//   test_ft_list_sort(&ret_value);
-//   test_ft_list_remove_if(&ret_value);
   return (ret_value);
 }

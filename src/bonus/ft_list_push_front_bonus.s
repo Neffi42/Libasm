@@ -1,5 +1,6 @@
 section .text
     global ft_list_push_front
+	extern __errno_location
 	extern malloc
 
 ft_list_push_front:
@@ -8,7 +9,7 @@ ft_list_push_front:
 	call .create_elem
 	pop rdi
 	cmp	rax, 0
-	je .on_error
+	je .end
 	mov rsi, qword [rdi]
 	mov qword [rax + 8], rsi
 	mov qword [rdi], rax
@@ -26,6 +27,13 @@ ft_list_push_front:
 	ret
 
 .on_error:
+	call __errno_location wrt ..plt
+	mov qword [rax], 12
+	xor rax, rax
+	ret
+
+
+.end:
 	ret
 
 section .note.GNU-stack noalloc noexec nowrite progbits
